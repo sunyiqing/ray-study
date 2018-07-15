@@ -1,11 +1,12 @@
 package com.ray.apache.common;
 
 import com.google.common.collect.Lists;
-import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.Validate;
+import org.apache.commons.lang3.*;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by yiqing on 2018/7/11.
@@ -13,7 +14,7 @@ import java.util.List;
 public class ApacheCommonsTest {
 
     public static void main(String[] args) {
-
+        enumUtils();
     }
 
 
@@ -53,8 +54,52 @@ public class ApacheCommonsTest {
     }
 
 
+
+
     public static void  stringEscapeUtils(){
+
+    }
+
+    public static void  enumUtils(){
+        List<User> users=EnumUtils.getEnumList(User.class);
+        users.stream().forEach(User::getName);
+
+        User u=EnumUtils.getEnum(User.class,"syq");
+        System.out.println(u.getName());
+
+        Map<String,User> maps=EnumUtils.getEnumMap(User.class);
+        User map=maps.get("haha");
+        System.out.println(map.getAge());
+
+
     }
 
 
+
+}
+enum User{
+    syq("syq",26,"n"),
+    haha("haha",26,"n");
+
+    private String name;
+    private int age;
+    private String sex;
+
+    public String getName() {
+        return name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    User(String name, int age, String sex) {
+        this.name = name;
+        this.age = age;
+        this.sex = sex;
+    }
 }
