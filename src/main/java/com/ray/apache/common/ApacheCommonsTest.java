@@ -75,6 +75,11 @@ public class ApacheCommonsTest {
     }
 
 
+    public static void dateUtilsTest(){
+        //date format utils
+//        DateFormatUtils.format(new Date(),DateFormatUtils.ISO_DATE_FORMAT);
+
+    }
 
 }
 enum User{

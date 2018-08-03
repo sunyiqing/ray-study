@@ -131,7 +131,7 @@ public class ArrayList<E> extends AbstractList<E>
 
     /**
      * The size of the ArrayList (the number of elements it contains).
-     *
+     * 用于存储list的大小
      * @serial
      */
     private int size;
@@ -210,6 +210,10 @@ public class ArrayList<E> extends AbstractList<E>
         }
     }
 
+    /**
+     * 扩容内部
+     * @param minCapacity
+     */
     private void ensureCapacityInternal(int minCapacity) {
         if (elementData == EMPTY_ELEMENTDATA) {
             minCapacity = Math.max(DEFAULT_CAPACITY, minCapacity);
@@ -218,6 +222,10 @@ public class ArrayList<E> extends AbstractList<E>
         ensureExplicitCapacity(minCapacity);
     }
 
+    /**
+     * 明确的增加容量
+     * @param minCapacity
+     */
     private void ensureExplicitCapacity(int minCapacity) {
         modCount++;
 
@@ -253,6 +261,7 @@ public class ArrayList<E> extends AbstractList<E>
         if (newCapacity - MAX_ARRAY_SIZE > 0)
             newCapacity = hugeCapacity(minCapacity);
         // minCapacity is usually close to size, so this is a win:
+        //扩容结束，重新将值赋值到新的集合中
         elementData = Arrays.copyOf(elementData, newCapacity);
     }
 
