@@ -767,7 +767,7 @@ public class HashMap<K,V> extends AbstractMap<K,V>
                                     loTail.next = e;
                                 loTail = e;
                             }
-                            //e.hash & oldCap 如果hash值 & oldCap的值为0,则这些属于低位，需要移动，移动+oldCap位
+                            //e.hash & oldCap 如果hash值 & oldCap的值为0,则这些属于高位，需要移动，移动+oldCap位
                             //举例子例如hash ：1111111110000010101 & 0000000000000010000(16) 最后不等于0 应该是1000
                             else {
                                 if (hiTail == null)
