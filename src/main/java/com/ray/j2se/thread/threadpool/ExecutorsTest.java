@@ -1,9 +1,8 @@
 package com.ray.j2se.thread.threadpool;
 
 import java.util.Random;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+import java.util.UUID;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -11,12 +10,12 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class ExecutorsTest {
 
-    public static void main(String[] args) {
-        for (int i = 0; i < 10000; i++) {
-            new Thread(new Task()).start();
-        }
+    public static void main(String[] args) throws ExecutionException, InterruptedException, TimeoutException {
+//        for (int i = 0; i < 10000; i++) {
+//            new Thread(new Task()).start();
+//        }
 //        new ExecutorsTest().newSingleThreadExecutorTest();
-
+        resultThreadPool();
     }
 
     /**
@@ -78,5 +77,42 @@ public class ExecutorsTest {
             }
         }
     }
-    //-------------------------------------------------------------------------------
+
+    /**
+     * 又返回结果的多线程
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
+    private static void resultThreadPool() throws ExecutionException, InterruptedException {
+        ExecutorService fixedThread=Executors.newFixedThreadPool(10);
+        Future<User> future = fixedThread.submit(new Callable() {
+            @Override
+            public Object call() {
+                try {
+                    User user1 = new User();
+                    user1.setUserName("syq");
+                    user1.setAge("11");
+                    for (int i = 0; i <100000 ; i++) {
+                        UUID.randomUUID();
+                    }
+//                    if(true) throw new RuntimeException();
+                    return user1;
+                }catch (Exception e){
+                    User user2 = new User();
+                    user2.setUserName("syq1");
+                    user2.setAge("22");
+                    return user2;
+                }
+            }
+        });
+        try{
+            User user = future.get(1L,TimeUnit.MILLISECONDS);
+        }catch (TimeoutException e){
+            System.out.printf("超时");
+        }
+
+    }
+
+
+    //------------------------------------------------------------------------------
 }
