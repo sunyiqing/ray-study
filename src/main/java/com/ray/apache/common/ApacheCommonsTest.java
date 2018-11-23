@@ -1,9 +1,15 @@
 package com.ray.apache.common;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import org.apache.commons.lang3.*;
+import org.apache.commons.lang3.math.NumberUtils;
 
 import java.math.BigDecimal;
+import java.text.NumberFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,10 +20,33 @@ import java.util.Map;
 public class ApacheCommonsTest {
 
     public static void main(String[] args) {
-        enumUtils();
+//        enumUtils();
+
+//        NumberUtilsTest();
+//        String mesg = String.format(BuildCacheErrorEnum.TASK_TYPE_VERIFY_FAILURE.getMsg(),"1","2","3","4","5","6");
+//        System.out.printf(mesg);
+
+//        TaskTypeEnum taskTypeEnum = TaskTypeEnum.DELETE;
+//        switch (taskTypeEnum) {
+//            case NEW:
+//
+//                break;
+//            case DELETE:
+//                System.out.println(1);
+//                break;
+//            case UPDATE:
+//                break;
+//        }
+
+
+//        long beginTime = new Date().getTime();
+//        NumberFormat df = NumberFormat.getInstance();
+//        df.setGroupingUsed(false);
+//        Double str = Double.valueOf("1000"+ df.format(beginTime));
+//        double score = Double.valueOf(Double.valueOf("1000" + df.format(beginTime)));
+//        System.out.println(score);
+
     }
-
-
 
     public static void arrayUtils(){
         String[] ss = new String[0];
@@ -60,6 +89,12 @@ public class ApacheCommonsTest {
 
     }
 
+
+    public static void NumberUtilsTest(){
+        boolean flag = NumberUtils.isNumber(null);
+        System.out.printf(flag+"");
+    }
+
     public static void  enumUtils(){
         List<User> users=EnumUtils.getEnumList(User.class);
         users.stream().forEach(User::getName);
@@ -70,6 +105,7 @@ public class ApacheCommonsTest {
         Map<String,User> maps=EnumUtils.getEnumMap(User.class);
         User map=maps.get("haha");
         System.out.println(map.getAge());
+
 
 
     }
