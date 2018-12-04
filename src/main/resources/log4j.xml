@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/'>
+
+
+    <!-- 控制台输出 -->
+    <appender name="stdout" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %p [%c] - %m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <!--最小级别-->
+            <param name="LevelMin" value="INFO"/>
+        </filter>
+    </appender>
+
+
+    <!-- 系统启动日志输出文件 -->
+    <appender name="fileAppender" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="Encoding" value="UTF-8"/>
+        <param name="File" value="/logs/test_log4j_logs/system.log"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %p [%c] - %m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <!--最小级别-->
+            <param name="LevelMin" value="INFO"/>
+        </filter>
+    </appender>
+
+
+    <!-- 测试 category 配置节 -->
+    <appender name="testCategoryAppender" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="File" value="/logs/test_log4j_logs/test_category_logs.log"/>
+        <param name="DatePattern"  value="'.'yyyy-MM-dd-HH'.log'" />
+        <layout  class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %p [%c] - %m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <!--最小级别-->
+            <param name="LevelMin" value="INFO" />
+        </filter>
+    </appender>
+
+
+    <!-- 测试 logger 配置节 -->
+    <appender name="testAppender" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="File" value="/logs/test_log4j_logs/test_logger_logs.log"/>
+        <param name="DatePattern"  value="'.'yyyy-MM-dd-HH'.log'" />
+        <layout  class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %p [%c] - %m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <!--最小级别，小于 error 级别错误将不输出-->
+            <param name="LevelMin" value="ERROR" />
+        </filter>
+    </appender>
+
+
+    <!--自定义日志输出配置，additivity=是否继承 root 配置-->
+    <category name="testCategoryLogger" additivity="false">
+        <level value="INFO"></level>
+        <appender-ref ref="testCategoryAppender"></appender-ref>
+        <appender-ref ref="stdout"></appender-ref>
+    </category>
+    <!--自定义日志输出配置，additivity=是否继承 root 配置-->
+    <logger name="testLogger" additivity="false">
+        <!--级别-->
+        <level value="INFO"></level>
+        <!--输出器-->
+        <appender-ref ref="testAppender"></appender-ref>
+        <appender-ref ref="stdout"></appender-ref>
+    </logger>
+
+
+    <!--基础日志输出配置-->
+    <root>
+        <level value="INFO"/>
+        <!--输出器-->
+        <appender-ref ref="stdout"/>
+        <appender-ref ref="fileAppender"/>
+    </root>
+
+
+</log4j:configuration>

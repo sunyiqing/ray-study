@@ -45,9 +45,9 @@
         </appender>
 
 
-    <logger name="com.ray.sl4j" additivity="false" level="INFO">
+    <logger name="com.ray.log.sl4j" additivity="false" level="INFO">
             <appender-ref ref="FILE" />
-            <appender-ref ref="FILE1" />
+            <appender-ref ref="STDOUT" />
     </logger>
 
     <!-- 日志输出级别 -->

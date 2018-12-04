@@ -12,9 +12,9 @@ public class RedisJava {
     private static final int DEFAULT_MAX_IDLE = 200;
     private static final long DEFAULT_MAX_WAIT = 10000;
     private static final Integer DEFAULT_TIME_OUT = 10000;
-    public static final String DEFAULT_IP_ADDR = "192.168.1.250";
+    public static final String DEFAULT_IP_ADDR = "192.168.200.240";
     public static final int DEFAULT_IP_PORT = 6379;
-    public static final String DEFAULT_PASSWORD = "123456";
+    public static final String DEFAULT_PASSWORD = "";
 
     private static JedisPool pool;
     static {
@@ -25,16 +25,20 @@ public class RedisJava {
             config.setMaxWaitMillis(DEFAULT_MAX_WAIT);
             config.setTestOnBorrow(true);
             config.setTestOnReturn(true);
-            pool = new JedisPool(config, DEFAULT_IP_ADDR, DEFAULT_IP_PORT , DEFAULT_TIME_OUT, DEFAULT_PASSWORD);
+            pool = new JedisPool(config, DEFAULT_IP_ADDR, DEFAULT_IP_PORT , DEFAULT_TIME_OUT);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public static void main(String[] args) {
-        transactionDiscardTest();
-        transactionExecTest();
-        transactionTest();
+
+//        transactionDiscardTest();
+//        transactionExecTest();
+//        transactionTest();
+        Jedis jedis=pool.getResource();
+        jedis.set("transaction_test","999");
+        System.out.println(jedis.get("transaction_test"));
     }
 
 
@@ -42,6 +46,7 @@ public class RedisJava {
      * 事务回滚
      */
     public static void transactionDiscardTest(){
+
         Jedis jedis=pool.getResource();
         try{
             jedis.set("transaction_discard_test","123");
