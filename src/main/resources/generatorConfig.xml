@@ -18,16 +18,16 @@
                 userId="root"
                 password="123456"/>
 
-        <javaModelGenerator targetPackage="com.jd.o2o.orderdiscount.domain.entity" targetProject="D:\jd-sources">
+        <javaModelGenerator targetPackage="com.xxx" targetProject="D:\sources">
             <property name="enableSubPackages" value="ture"/>
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
 
-        <sqlMapGenerator targetPackage="sqlmap.mybatis.mysql" targetProject="D:\jd-sources">
+        <sqlMapGenerator targetPackage="sqlmap.mybatis.mysql" targetProject="D:\sources">
             <property name="enableSubPackages" value="ture"/>
         </sqlMapGenerator>
 
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.jd.o2o.orderdiscount.dao" targetProject="D:\jd-sources">
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.xxx" targetProject="D:\sources">
             <property name="enableSubPackages" value="ture"/>
         </javaClientGenerator>
 
