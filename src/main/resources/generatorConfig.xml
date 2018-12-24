@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE generatorConfiguration  
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"  
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!--<classPathEntry-->
+            <!--location="C:\Users\ggli\.m2\repository\mysql\mysql-connector-java\5.1.32\mysql-connector-java-5.1.32.jar"/>-->
+
+    <context id="MySQLTables" targetRuntime="MyBatis3">
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+        <jdbcConnection
+                driverClass="com.mysql.cj.jdbc.Driver"
+                connectionURL="jdbc:mysql://localhost:3306/dev?useSSL=false&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;allowMultiQueries=true&amp;serverTimezone=GMT%2B8"
+                userId="root"
+                password="123456"/>
+
+        <javaModelGenerator targetPackage="com.jd.o2o.orderdiscount.domain.entity" targetProject="D:\jd-sources">
+            <property name="enableSubPackages" value="ture"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="sqlmap.mybatis.mysql" targetProject="D:\jd-sources">
+            <property name="enableSubPackages" value="ture"/>
+        </sqlMapGenerator>
+
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.jd.o2o.orderdiscount.dao" targetProject="D:\jd-sources">
+            <property name="enableSubPackages" value="ture"/>
+        </javaClientGenerator>
+
+ 
+        <!-- 后面的参数是避免生成example -->
+        <table schema="myschema" tableName="new_promotion_task_his" domainObjectName="NewPromotionTaskHisMapper"
+            enableCountByExample="false" enableUpdateByExample="false"
+            enableDeleteByExample="false" enableSelectByExample="false"
+            selectByExampleQueryId="false" />
+    </context>
+</generatorConfiguration>

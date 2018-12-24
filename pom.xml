@@ -17,6 +17,43 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+
+            <!--mapper生成工具  与generatorConfig.xml 配合使用-->
+            <plugin>
+                <groupId>org.mybatis.generator</groupId>
+                <artifactId>mybatis-generator-maven-plugin</artifactId>
+                <version>1.3.5</version>
+                <executions>
+                    <execution>
+                        <id>Generate MyBatis Artifacts</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <overwrite>true</overwrite>
+                    <verbose>true</verbose>
+                    <configurationFile>D:\code\ray-study\src\main\resources\generatorConfig.xml</configurationFile>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <version>8.0.11</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.mybatis.generator</groupId>
+                        <artifactId>mybatis-generator-core</artifactId>
+                        <version>1.3.5</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.mybatis</groupId>
+                        <artifactId>mybatis</artifactId>
+                        <version>3.4.6</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
         </plugins>
     </build>
 
