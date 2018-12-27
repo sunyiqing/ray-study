@@ -12,7 +12,7 @@ public class RedisKit {
     private static final int DEFAULT_MAX_IDLE = 200;
     private static final long DEFAULT_MAX_WAIT = 10000;
     private static final Integer DEFAULT_TIME_OUT = 10000;
-    public static final String DEFAULT_IP_ADDR = "192.168.200.240";
+    public static final String DEFAULT_IP_ADDR = "XXXXXXXXXXXXXXXXXXXX";
     public static final int DEFAULT_IP_PORT = 6379;
     public static final String DEFAULT_PASSWORD = "";
 
