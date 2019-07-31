@@ -1,4 +1,4 @@
-package com.ray.java8;
+package com.ray.java8.Lambda;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
@@ -11,6 +11,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 public class LambdaTest {
 
@@ -22,6 +23,8 @@ public class LambdaTest {
         streamsTest();
         System.out.println("-----------------------------");
         parallelStreamsTest();
+        System.out.println("-----------------------------");
+        deepStreamsTest();
     }
 
     private static void sortTest(){
@@ -160,6 +163,26 @@ public class LambdaTest {
         long millis = TimeUnit.NANOSECONDS.toMillis(t1 - t0);
         System.out.println(String.format("parallel sort took: %d ms", millis));
 
+    }
+
+    private static void deepStreamsTest(){
+        //不加foreach不会输出
+        //加foreach后才会输出
+        Stream.of("d2", "a2", "b1", "b3", "c")
+                .filter(s -> {
+                    System.out.println("filter: " + s);
+                    return true;
+                })
+                .forEach(s -> System.out.println("forEach: " + s));
+
+        //
+        Stream.of("d2", "a2", "b1", "b3", "c").map(s -> {
+            System.out.println("map："+s);
+            return s.toUpperCase();
+        }).anyMatch(s -> {
+            System.out.println("map："+s);
+            return s.startsWith("A");
+        });
     }
 
 }
