@@ -2,7 +2,6 @@ package com.ray.project.kit;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
-import com.ray.j2se.collection.OrderDiscountType;
 import org.apache.commons.lang3.EnumUtils;
 
 import java.lang.reflect.Method;
