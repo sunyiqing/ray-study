@@ -1,19 +1,23 @@
 package com.ray.java8.Lambda;
 
 import com.alibaba.fastjson.JSON;
+import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 
-import java.util.Arrays;
-import java.util.IntSummaryStatistics;
-import java.util.List;
-import java.util.StringJoiner;
+import java.util.*;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class DeepStreamsLambdaTest {
 
     public static void main(String[] args) {
         DeepStreamsLambdaTest test = new DeepStreamsLambdaTest();
-        test.test();
+//        test.test();
+//        test.flatMapTest();
+//        test.reduceTest();
+//        Optional.of(null);
+        Optional.ofNullable(null);
 
     }
 
@@ -43,8 +47,120 @@ public class DeepStreamsLambdaTest {
                         StringJoiner::toString);
         String names = persons.stream().collect(personNameCollector);
         System.out.println(names);
+
+        List<String> lists = persons.stream().map(p -> p.name).collect(Collectors.toList());
+        System.out.println(JSON.toJSONString(lists));
+
+
+        persons.stream().forEach(System.out::println);
+        List<Person> personList = persons.stream().collect(Collectors.toList());
+        System.out.println(JSON.toJSONString(personList));
+        persons.stream().mapToDouble(p -> p.age).min();
+        persons.stream().mapToInt(p -> p.age).sum();
+        persons.stream().mapToInt(p -> p.age).count();
+        IntSummaryStatistics intSummaryStatistics1 = persons.stream().mapToInt(p -> p.age).summaryStatistics();
+        persons.stream().mapToInt(p -> p.age).sorted().forEach(System.out::println);
+        persons.stream().map(p -> p.name).distinct();
+
+        //reduce
+        System.out.println(persons.stream().map(p ->p.age).reduce(Math::max).get());
+        System.out.println(Stream.of(1, 2, 3, 4).reduce(100, (min, item) -> Math.min(min, item)));
+        persons
+                .stream()
+                .reduce((p1, p2) -> p1.age > p2.age ? p1 : p2)
+                .ifPresent(System.out::println);
+        //flat map
+        List<Person> persons1 =
+                Arrays.asList(
+                        new Person("Max1", 181),
+                        new Person("Peter1", 231),
+                        new Person("Pamela1", 231),
+                        new Person("David1", 121));
+        //PEAK
+        //数据流的不同类型
+        Stream.of("a1", "a2", "a3")
+                .map(s -> s.substring(1))
+                .mapToInt(Integer::parseInt)
+                .max()
+                .ifPresent(System.out::println);
+        IntStream.range(1, 4)
+                .mapToObj(i -> "a" + i)
+                .forEach(System.out::println);
+        Stream.of(1.0, 2.0, 3.0)
+                .mapToInt(Double::intValue)
+                .mapToObj(i -> "a" + i)
+                .forEach(System.out::println);
+
+
     }
 
+    public void flatMapTest(){
+        List<Foo> foos = new ArrayList<>();
+
+        // create foos
+        IntStream
+                .range(1, 4)
+                .forEach(i -> foos.add(new Foo("Foo" + i)));
+
+        // create bars
+        foos.forEach(f ->
+                IntStream
+                        .range(1, 4)
+                        .forEach(i -> f.bars.add(new Bar("Bar" + i + " <- " + f.name))));
+
+        foos.stream().flatMap(f -> f.bars.stream()).forEach(b -> System.out.println(b.name));
+
+    }
+
+    public void reduceTest(){
+
+        //collect
+        List<Person> persons =
+                Arrays.asList(
+                        new Person("Max", 18),
+                        new Person("Peter", 23),
+                        new Person("Pamela", 23),
+                        new Person("David", 12));
+        //取最大年龄
+        persons.stream().reduce((p1 , p2) -> p1.age > p2.age ? p1 : p2);
+
+        //拼接出新对象
+        Person person = persons.stream().reduce(new Person("",0),(p1,p2) -> {
+            p1.age += p2.age;
+            p1.name += p2.name;
+            return p1;
+        });
+        System.out.format("name=%s; age=%s", person.name, person.age);
+
+        //累加所有年级
+        Integer ageSum = persons
+                .stream()
+                .reduce(0, (sum, p) -> sum += p.age, (sum1, sum2) -> sum1 + sum2);
+
+        System.out.println(ageSum);  // 76
+    }
+
+    public void optionalTest(){
+       Optional.ofNullable(null);
+       Optional.of(null);
+
+    }
+    class Foo {
+        String name;
+        List<Bar> bars = new ArrayList<>();
+
+        Foo(String name) {
+            this.name = name;
+        }
+    }
+
+    class Bar {
+        String name;
+
+        Bar(String name) {
+            this.name = name;
+        }
+    }
 
     class Person {
         String name;
