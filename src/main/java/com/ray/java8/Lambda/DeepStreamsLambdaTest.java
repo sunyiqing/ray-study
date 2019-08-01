@@ -91,6 +91,10 @@ public class DeepStreamsLambdaTest {
                 .mapToObj(i -> "a" + i)
                 .forEach(System.out::println);
 
+        //joining
+        persons.stream().map(person -> person.name).collect(Collectors.joining(";"));
+//        personList.stream().filter(person -> person.age > 10).collect(Collectors.groupingBy(String::length));
+
 
     }
 
