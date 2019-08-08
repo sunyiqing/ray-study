@@ -1,6 +1,8 @@
 package com.ray.java8.Lambda;
 
 import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Lists;
+import org.apache.commons.lang3.StringUtils;
 import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 
 import java.util.*;
@@ -16,8 +18,8 @@ public class DeepStreamsLambdaTest {
 //        test.test();
 //        test.flatMapTest();
 //        test.reduceTest();
+        test.optionalTest();
 //        Optional.of(null);
-        Optional.ofNullable(null);
 
     }
 
@@ -95,6 +97,12 @@ public class DeepStreamsLambdaTest {
         persons.stream().map(person -> person.name).collect(Collectors.joining(";"));
 //        personList.stream().filter(person -> person.age > 10).collect(Collectors.groupingBy(String::length));
 
+        //map
+        List<Person> newPersons = persons.stream().map(p -> new Person(p.name,p.age)).collect(Collectors.toList());
+        System.out.printf(JSON.toJSONString(newPersons));
+
+        //Optional
+//        Optional.of(persons).get().stream().;
 
     }
 
@@ -146,8 +154,23 @@ public class DeepStreamsLambdaTest {
 
     public void optionalTest(){
        Optional.ofNullable(null);
-       Optional.of(null);
+//       Optional.of(null);
 
+        List<Person> persons =
+                Arrays.asList(
+                        new Person("Max", 18),
+                        new Person("Peter", 23),
+                        new Person("Pamela", 23),
+                        new Person(null, 12));
+        List<Person> personsNull = null;
+        Optional.ofNullable(persons).orElse(Lists.newArrayList()).forEach(p -> System.out.print(p.getName()));
+        List<String> names =
+        Optional.ofNullable(persons)
+                .orElse(Lists.newArrayList())
+                .stream()
+                .filter(person -> StringUtils.isNotEmpty(person.getName()))
+                .map(Person::getName).collect(Collectors.toList());
+        names.forEach(System.out::println);
     }
     class Foo {
         String name;
