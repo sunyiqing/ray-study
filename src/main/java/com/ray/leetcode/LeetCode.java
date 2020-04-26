@@ -31,6 +31,22 @@ public class LeetCode {
         System.out.println(leetCode.longestCommonPrefix1(strs1));
         System.out.println(leetCode.isValid("{[}]"));
 
+        ListNode l1 = new ListNode(1);
+        ListNode l2 = new ListNode(4);
+        l1.next = l2;
+
+
+        ListNode ll1 = new ListNode(2);
+        ListNode ll2 = new ListNode(3);
+        ll1.next = ll2;
+        ListNode listNode = leetCode.mergeTwoLists(l1, ll1);
+        System.out.println(JSON.toJSONString(listNode));
+
+        int[] numsq = {1,1,2};
+        leetCode.removeDuplicates(numsq);
+        System.out.println(numsq);
+
+
     }
 
     //两数和
@@ -146,6 +162,34 @@ public class LeetCode {
         return stack.size() == 1;
     }
 
+    //两个有序链表关联
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        if(l1 == null) {
+            return l2;
+        }
+        if(l2 == null) {
+            return l1;
+        }
 
+        if(l1.val < l2.val) {
+            l1.next = mergeTwoLists(l1.next, l2);
+            return l1;
+        } else {
+            l2.next = mergeTwoLists(l1, l2.next);
+            return l2;
+        }
+    }
 
+    //删除数组中的重复数据,空间复杂度o(1)
+    public int removeDuplicates(int[] nums) {
+        if (nums.length == 0) return 0;
+        int i = 0;
+        for (int j = 1; j < nums.length; j++) {
+            if (nums[j] != nums[i]) {
+                i++;
+                nums[i] = nums[j];
+            }
+        }
+        return i + 1;
+    }
 }
