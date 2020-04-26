@@ -1,11 +1,17 @@
 package com.ray.leetcode;
 
 import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Maps;
 import com.sun.org.apache.regexp.internal.RE;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
+/**
+ * 简单 ——> 复杂
+ * 想不出去来，就去看答案，理解答案，自己实现一遍。
+ */
 public class LeetCode {
 
     public static void main(String[] args) {
@@ -18,9 +24,16 @@ public class LeetCode {
         System.out.println(leetCode.reverse1(1999999999));
         System.out.println(leetCode.reverse2(199999999));
         System.out.println(leetCode.isPalindrome(1221));
+        String[] strs = {"flower","flow","flight"};
+
+        System.out.println(leetCode.longestCommonPrefix(strs));
+        String[] strs1 = {"flower","flow","","flight"};
+        System.out.println(leetCode.longestCommonPrefix1(strs1));
+        System.out.println(leetCode.isValid("{[}]"));
 
     }
 
+    //两数和
     public int[] twoSum(int[] nums,int target){
         Map<Integer, Integer> map = new HashMap<>();
         for (int i = 0; i < nums.length; i++) {
@@ -34,6 +47,7 @@ public class LeetCode {
     }
 
 
+    //数反转
     public int reverse1(int x){
         int ans = 0;
         while (x != 0){
@@ -59,6 +73,7 @@ public class LeetCode {
         return (int)ans;
     }
 
+    //回转数
     public boolean isPalindrome(int x) {
         if ( x < 0 || (x % 10 == 0 && x != 0)){
             return false;
@@ -70,5 +85,67 @@ public class LeetCode {
         }
         return x == revertedNumber || x == revertedNumber / 10;
     }
+
+
+    //最长公共前缀
+    public String longestCommonPrefix(String[] strs){
+        if (strs.length == 0){
+            return "";
+        }
+        String prefix = strs[0];
+        for (int i = 1; i < strs.length;i++){
+            while (strs[i].indexOf(prefix) != 0){
+                prefix = prefix.substring(0,prefix.length() - 1);
+                if (prefix.isEmpty()) return "";
+            }
+        }
+        return prefix;
+    }
+
+    //最长公共，二分查找
+    public String longestCommonPrefix1(String[] strs){
+        if (strs == null || strs.length == 0){
+            return "";
+        }
+        return longestCommonPrefix1(strs,0,strs.length - 1);
+    }
+
+    public String longestCommonPrefix1(String[] strs,int l,int r){
+        if (l == r) {
+            return strs[l];
+        }else {
+            int mid = (r + l) / 2;
+            String left = longestCommonPrefix1(strs, l, mid);
+            String right = longestCommonPrefix1(strs,mid + 1,r);
+            return commonPrefix(left,right);
+        }
+    }
+
+    public String commonPrefix(String left,String rigtht){
+        int min = Math.min(left.length(),rigtht.length());
+        for (int i = 0; i < min; i ++){
+            if (left.charAt(i) != rigtht.charAt(i)){
+                return left.substring(0,i);
+            }
+        }
+        return left.substring(0,min);
+    }
+
+    //有效的括号,栈先进先出
+    private static final Map<Character,Character> map = new HashMap<Character,Character>(){{
+        put('{','}'); put('[',']'); put('(',')'); put('?','?');
+    }};
+    public boolean isValid(String s) {
+        LinkedList<Character> stack = new LinkedList<Character>() {{ add('?');}};
+        for(Character c : s.toCharArray()){
+            if(map.containsKey(c)){
+                stack.addLast(c);
+            }
+            else if (map.get(stack.removeLast()) != c) return false;
+        }
+        return stack.size() == 1;
+    }
+
+
 
 }
