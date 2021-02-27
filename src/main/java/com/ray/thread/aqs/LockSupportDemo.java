@@ -29,11 +29,12 @@ public class LockSupportDemo {
             }
             System.out.println(Thread.currentThread().getName() + "----come in");
             //TODO:只有park，没有unpark,会一直等待。
+            System.out.println(Thread.currentThread().getName() + "----等待中");
             LockSupport.park();
             //TODO:多个unpark不会让permit继续+1,只能继续等待
 //            LockSupport.park();
 
-            System.out.println(Thread.currentThread().getName() + "----等待中");
+            System.out.println(Thread.currentThread().getName() + "----开始执行");
         },"A");
         a.start();
 
