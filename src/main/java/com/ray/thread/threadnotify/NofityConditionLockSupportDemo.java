@@ -1,4 +1,4 @@
-package com.ray.thread.aqs;
+package com.ray.thread.threadnotify;
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
@@ -9,14 +9,14 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * Created by yiqing on 2021/2/25.
  */
-public class LockSupportDemo {
+public class NofityConditionLockSupportDemo {
     static Object objectLock = new Object();
     static Lock lock = new ReentrantLock();
     static Condition condition = lock.newCondition();
 
     public static void main(String[] args) {
-//        conditionAWaitSignal();
-        parkUnPark();
+        conditionAWaitSignal();
+//        parkUnPark();
     }
 
     private static void parkUnPark(){
