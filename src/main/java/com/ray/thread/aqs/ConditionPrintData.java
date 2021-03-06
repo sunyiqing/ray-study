@@ -1,4 +1,4 @@
-package com.ray.thread.threadnotify;
+package com.ray.thread.aqs;
 
 /**
  * Created by yiqing on 2021/3/6.
@@ -95,7 +95,8 @@ class ShareData{
 //    }
 
 }
-public class ConditionDemo {
+
+public class ConditionPrintData {
 
     public static void main(String[] args) {
         ShareData shareData = new ShareData();
