@@ -9,18 +9,16 @@ import java.util.concurrent.locks.ReentrantLock;
  * Created by yiqing on 2021/3/6.
  */
 
-/**
- * 线程A，负责通知C1唤醒
- * 线程B，负责C1阻塞
- * 线程A休眠5秒钟，线程B先执行
- *
- * 问题，线程B已经发生了lock操作，c1阻塞后。线程A是否还能进入呢执行呢？
+/*
+ * 线程A，后执行，负责通过Condition.signal唤醒线程B
+ * 线程B，先执行，调用Condition.await阻塞
+ * 问题，线程B已经发生了lock操作，阻塞后。线程A是否还能进入执行呢？
  *
  */
 public class ConditionDemo {
     private static Lock lock = new ReentrantLock();
 
-     static Condition c1 = lock.newCondition();
+     static Condition condition = lock.newCondition();
 
     public static void main(String[] args) {
         new Thread(() ->{
@@ -31,9 +29,11 @@ public class ConditionDemo {
             }
             lock.lock();
             System.out.println(Thread.currentThread().getName() + "进入线程A执行");
-            c1.signal();
+            condition.signal();
             System.out.println(Thread.currentThread().getName() + "通知线程B开始执行");
             lock.unlock();
+            System.out.println(Thread.currentThread().getName() + "通知线程B结束");
+
         },"A").start();
 
         new Thread(() ->{
@@ -41,7 +41,7 @@ public class ConditionDemo {
             System.out.println(Thread.currentThread().getName() + "进入线程B执行");
             try {
                 System.out.println(Thread.currentThread().getName() + "线程B进入阻塞");
-                c1.await();
+                condition.await();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

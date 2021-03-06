@@ -28,8 +28,7 @@ class ShareData{
 
     public void printData(Integer curNum,Integer nextNum,Condition curContion,Condition nextContion,Integer printTime) throws InterruptedException {
         lock.lock();
-        System.out.println("---------"+Thread.currentThread().getName());
-
+        System.out.println("线程"+Thread.currentThread().getName()+"开始输出");
         try{
             while (number != curNum){
                 curContion.await();
@@ -42,6 +41,8 @@ class ShareData{
 
         }finally {
             lock.unlock();
+            System.out.println("线程"+Thread.currentThread().getName()+"结束输出");
+
         }
     }
 
@@ -101,11 +102,11 @@ public class ConditionPrintData {
     public static void main(String[] args) {
         ShareData shareData = new ShareData();
         new Thread(() ->{
-            try {
-                TimeUnit.SECONDS.sleep(5);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                TimeUnit.SECONDS.sleep(5);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
             for (int i = 0; i < 10; i++) {
                 try {
                     shareData.printData(1,2,shareData.c1,shareData.c2,5);
