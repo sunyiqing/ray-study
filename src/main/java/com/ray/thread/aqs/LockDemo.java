@@ -23,7 +23,7 @@ public class LockDemo {
             lock.lock();
             System.out.println("用户A,开始业务");
             try {
-                TimeUnit.MINUTES.sleep(100);
+                TimeUnit.SECONDS.sleep(5);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -34,6 +34,12 @@ public class LockDemo {
         new Thread(() ->{
             lock.lock();
             System.out.println("用户B,开始业务");
+            try {
+                TimeUnit.SECONDS.sleep(2);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
             lock.unlock();
         },"B").start();
 
