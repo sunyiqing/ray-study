@@ -20,6 +20,12 @@ public class MapTest {
         strings.add("haha");
         System.out.println(JSON.toJSONString(map));
 
+        //computeIfPresent
+        Map<String, String> sq = Maps.newHashMap();
+        sq.put("1","2");
+        sq.computeIfPresent("1",(k,v) -> v + "11");
+        System.out.println(JSON.toJSONString(sq));
+
 
 
 
